@@ -1,5 +1,3 @@
-package Lab7BinaryTree;
-
 import java.util.*;
 public class LinkedBinaryTree<E> implements BinaryTree<E> {
 
