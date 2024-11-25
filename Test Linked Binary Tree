@@ -1,0 +1,44 @@
+public class TestLinkedBinaryTree {
+	public static void main(String[] args) {
+        LinkedBinaryTree<Integer> tree = new LinkedBinaryTree<>();
+        BinaryTreeNode<Integer> root = tree.addRoot(1);
+        
+        //print left side of tree
+        BinaryTreeNode<Integer> leftChild = tree.addLeft(root, 2);
+        BinaryTreeNode<Integer> leftChildL2 = tree.addLeft(leftChild, 3);
+        BinaryTreeNode<Integer> rightChildL2 = tree.addRight(leftChild, 5);
+        BinaryTreeNode<Integer> leftChildL3 = tree.addLeft(rightChildL2, 6);
+        BinaryTreeNode<Integer> rightChildL3 = tree.addRight(rightChildL2, 7);
+        
+        //print right side of tree
+        BinaryTreeNode<Integer> rightChild = tree.addRight(root, 3);
+        BinaryTreeNode<Integer> rightChildR2 = tree.addRight(rightChild, 8);
+        BinaryTreeNode<Integer> leftChildR2 = tree.addLeft(rightChild, 9);
+        BinaryTreeNode<Integer> leftChildR3 = tree.addLeft(rightChildR2, 10);
+        BinaryTreeNode<Integer> rightChildR3 = tree.addRight(rightChildR2, 11);
+        BinaryTreeNode<Integer> leftChildR4 = tree.addLeft(leftChildR3, 12);
+        BinaryTreeNode<Integer> rightChildR4 = tree.addRight(leftChildR3, 13);
+        
+        
+        System.out.println("Pre-order traversal:");
+        tree.preOrder(root);
+
+        System.out.println("\nPost-order traversal:");
+        tree.postOrder(root);
+
+        System.out.println("\nIn-order traversal:");
+        tree.inOrder(root);
+
+        int searchKey = 5;
+        BinaryTreeNode<Integer> searchResult = tree.search(root, searchKey);
+        if (searchResult != null) {
+            System.out.println("\nNode with key " + searchKey + " found in the tree.");
+        } else {
+            System.out.println("\nNode with key " + searchKey + " not found in the tree.");
+        }
+
+        System.out.println("\nTree structure:");
+        tree.printTreeGraph();
+        
+    }
+}
