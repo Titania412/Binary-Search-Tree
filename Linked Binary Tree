@@ -1,0 +1,231 @@
+package Lab7BinaryTree;
+
+import java.util.*;
+public class LinkedBinaryTree<E> implements BinaryTree<E> {
+
+	protected BinaryTreeNode<E> root;
+	int size;
+	
+	public LinkedBinaryTree() {
+		
+	}
+	
+	public LinkedBinaryTree(BinaryTree<E> root, int size) {
+		this.root = null;
+		this.size = 0;
+	}
+	
+	public int size() {
+		return size;
+	}
+	
+	public boolean isEmpty() {
+		return size == 0;
+	}
+	
+	public E root(){
+		return (E) root.getElement();
+	}
+	
+	public BinaryTreeNode<E> parent(BinaryTreeNode<E> v){
+		if(root != null) {
+			return root.getParent();
+		} else {
+			return null;
+		}
+	}
+	
+	public int numChildren(BinaryTreeNode<E> v) {
+		int count = 0;
+        if (v.getLeft() != null) count++;
+        if (v.getRight() != null) count++;
+        return count;
+    }
+	
+	public boolean isInternal(BinaryTreeNode<E> v) {
+			return numChildren(v) > 0;
+	}
+	
+	public boolean isExternal(BinaryTreeNode<E> v) {
+		return numChildren(v) == 0;
+	}
+	
+	public boolean isRoot(BinaryTreeNode<E> v) {
+		return v == root;
+	}
+	
+	public BinaryTreeNode<E> left(BinaryTreeNode<E> v){
+		return v.getLeft();
+	}
+	
+	public BinaryTreeNode<E> right(BinaryTreeNode<E> v){
+		return v.getRight();
+	}
+	
+	public BinaryTreeNode<E> sibling(BinaryTreeNode<E> v){
+		BinaryTreeNode<E> parent = parent(v);
+		if(parent == null) {
+			return null;
+		} 
+		if (v == left (parent)) {
+			return right(parent);
+		} else {
+			return left(parent);
+		}
+	
+	}
+	
+	public boolean hasLeft(BinaryTreeNode<E> v) {
+		return v.getLeft() != null;
+	}
+	
+	public boolean hasRight (BinaryTreeNode<E> v) {
+		return v.getRight() != null;
+	}
+	
+	public BinaryTreeNode<E> addRoot(E e) {
+        if (!isEmpty()) {
+        	return null;
+        }
+        root = new BinaryTreeNode<>(e, null, null, null);
+        size = 1;
+        return root;
+    }
+	
+	public BinaryTreeNode<E> addLeft(BinaryTreeNode<E> v, E e){
+		if (v.getLeft() != null) {
+        	return null;
+        }
+        BinaryTreeNode<E> newL = new BinaryTreeNode<>(e, v, null, null);
+        v.setLeft(newL);
+        size++;
+        return newL;
+	}
+	
+	public BinaryTreeNode<E> addRight(BinaryTreeNode<E> v, E e){
+		if (v.getRight() != null) {
+        	return null;
+        }
+        BinaryTreeNode<E> newR = new BinaryTreeNode<>(e, v, null, null);
+        v.setRight(newR);
+        size++;
+        return newR;
+		}
+	
+	public E set(BinaryTreeNode<E> v, E e) {
+		E previous = v.getElement();
+		v.setElement(e);
+		return previous;
+	}
+	
+	public E remove(BinaryTreeNode<E> v) {
+		BinaryTreeNode<E> parent = v.getParent();
+		if(numChildren(v) == 2) {
+			return null;
+		}
+		
+		BinaryTreeNode<E> child;
+		if (v.getLeft() != null) {
+		    child = v.getLeft();
+		} else {
+		    child = v.getRight();
+		}
+		
+		if (v == root) {
+			root = child;
+		} else {
+            if (v == parent.getLeft()) {
+            	parent.setLeft(child);
+            } else {
+            	parent.setRight(child);
+            }
+        }
+		
+        size--;
+        return v.getElement();
+    }
+	
+	public void preOrder(BinaryTreeNode<E> root) {
+		if(root != null) {
+			System.out.print(root.getElement() + " ");
+			preOrder(root.getLeft());
+			preOrder(root.getRight());
+		}
+	}
+	
+	public void postOrder(BinaryTreeNode<E> root) {
+		if(root != null) {
+			postOrder(root.getLeft());
+			postOrder(root.getRight());
+			System.out.print(root.getElement() + " ");
+
+		}
+	}
+	
+	public void inOrder(BinaryTreeNode<E> root) {
+		if (root != null) {
+            inOrder(root.getLeft());
+            System.out.print(root.getElement() + " ");
+            inOrder(root.getRight());
+        }
+	}
+	
+	public BinaryTreeNode<E> search(BinaryTreeNode<E> root, E key){
+		if (root == null || root.getElement().equals(key)) {
+            return root;
+        }
+
+        BinaryTreeNode<E> leftResult = search(root.getLeft(), key);
+        if (leftResult != null) {
+            return leftResult;
+        }
+
+        return search(root.getRight(), key);
+    }
+	
+	public void printTreeGraph() {
+		List<BinaryTreeNode<E>> list = new ArrayList<BinaryTreeNode<E>>();
+		list.add(root);
+		printTree(list, getHeight(root));
+	}
+	
+	public int getHeight(BinaryTreeNode<E> root) {
+		if (root == null) {
+			return 0;
+		} else {
+			return 1 + Math.max(getHeight(left(root)), getHeight(right(root)));
+		}
+	}
+		
+	private void printTree(List<BinaryTreeNode<E>> levelNodes, int level) {
+		List<BinaryTreeNode<E>> nodes = new ArrayList<BinaryTreeNode<E>>();
+		printIndentForLevel(level);
+		
+		for (BinaryTreeNode<E> treeNode : levelNodes) {
+		System.out.print(treeNode == null?" ":treeNode.getElement());
+		printSpacingBetweenNodes(level);
+		
+		if(level>1){
+			nodes.add(treeNode == null? null:left(treeNode));
+			nodes.add(treeNode == null? null:right(treeNode));
+		}
+	}
+		System.out.println();
+		
+		if(level>1){
+			printTree(nodes, level-1);
+		}
+	}
+	
+	private void printIndentForLevel(int level){
+		for (int i = (int) (Math.pow(2,level-1)); i >0; i--) {
+			System.out.print(" ");
+		}
+	}
+	
+	private void printSpacingBetweenNodes(int level){
+		for (int i = (int) ((Math.pow(2,level-1))*2)-1; i >0; i--) {
+		System.out.print(" ");
+		}
+	}
+}
