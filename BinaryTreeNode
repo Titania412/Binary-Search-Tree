@@ -1,0 +1,49 @@
+public class BinaryTreeNode<E> {
+
+		private E element;
+		BinaryTreeNode<E> parent;
+		BinaryTreeNode<E> left;
+		BinaryTreeNode<E> right;
+		
+		public  BinaryTreeNode(E element, BinaryTreeNode<E> parent, BinaryTreeNode<E> left, BinaryTreeNode<E> right) {
+			this.element = element;
+			this.parent = parent;
+			this.left = left;
+			this.right = right;
+		}
+		
+		public E getElement() {
+			return element;
+		}
+		
+		public BinaryTreeNode<E> getParent() {
+			return parent;
+		}
+		
+		public BinaryTreeNode<E> getLeft() {
+			return left;
+		}
+		
+		public BinaryTreeNode<E> getRight() {
+			return right;
+		}
+		
+		public void setElement(E e) {
+			element = e;
+		}
+		
+		public void setParent(BinaryTreeNode<E> v) {
+			parent = v;
+		}
+		
+		public void setLeft(BinaryTreeNode<E> v) {
+			left = v;
+		}
+		
+		public void setRight(BinaryTreeNode<E> v) {
+			right = v;
+		}
+		
+		
+		
+}
