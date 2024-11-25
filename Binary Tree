@@ -1,0 +1,20 @@
+public interface BinaryTree<E> {
+
+	int size();
+	boolean isEmpty();
+	E root();
+	int numChildren(BinaryTreeNode<E> v);
+	boolean isInternal(BinaryTreeNode<E> v);
+	boolean isExternal(BinaryTreeNode<E> v);
+	boolean isRoot(BinaryTreeNode<E> v);
+	BinaryTreeNode<E> left(BinaryTreeNode<E> v);
+	BinaryTreeNode<E> right(BinaryTreeNode<E> v);
+	BinaryTreeNode<E> sibling(BinaryTreeNode<E> v);
+	boolean hasLeft(BinaryTreeNode<E> v);
+	boolean hasRight(BinaryTreeNode<E> v);
+	BinaryTreeNode<E> addLeft(BinaryTreeNode<E> v, E e);
+	BinaryTreeNode<E> addRight(BinaryTreeNode<E> v, E e);
+	
+	
+}
+
